@@ -90,7 +90,7 @@ function balanceAddress(address _owner) public view returns (uint256 balance);
 
 }
 
-contract HMREPERC20 is owned {
+contract HMREP is owned {
     
     using SafeMath for uint256;
     

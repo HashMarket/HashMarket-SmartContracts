@@ -52,7 +52,7 @@ contract owned {
 
 interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; }
 
-contract HASHMERC20 is owned {
+contract HASHM is owned {
     
     using SafeMath for uint256;
     
