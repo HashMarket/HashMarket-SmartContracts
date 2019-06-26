@@ -87,10 +87,9 @@ contract HASHMinterface {
     
 function transfer(address _to, uint256 _value) public returns (bool success); 
 function balanceAddress(address _owner) public view returns (uint256 balance);
-
 }
 
-contract HMREP is owned {
+contract HMREPSWAP is owned {
     
     using SafeMath for uint256;
     
@@ -116,8 +115,9 @@ contract HMREP is owned {
 
 
      /// @notice Constrctor function: Initializes contract with initial supply tokens to the creator of the contract
+     ///constructor(uint256 initialSupply, string memory tokenName, string memory tokenSymbol) public {
     constructor(uint256 initialSupply, string memory tokenName, string memory tokenSymbol) public {
-        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount
+        totalSupply = initialSupply; //initialSupply * 1 ** uint256(decimals);  // Update total supply with the decimal amount
         balanceOf[msg.sender] = totalSupply;                    // Give the creator all initial tokens
         name = tokenName;                                       // Set the name for display purposes
         symbol = tokenSymbol;                                   // Set the symbol for display purposes
@@ -201,14 +201,14 @@ contract HMREP is owned {
         emit Transfer(address(this), target, mintedAmount);
     }
     
-    
+       uint256 public userRate;
       /// @notice Calculate the rate of the reputation that a address has
       /// @param target Address of the user
       //uint256 userRate = div(mul(userBalance, 100), totalSupply);
-    function addressRate(address target) public view returns (uint256) {
+    function addressRate(address target) public returns (uint256) {
         uint256 userBalance = balanceOf[target];
-        uint256 userRate = (userBalance*100)/totalSupply;
-        //emit ReputationUserRate(target, userRate); Si es view no puede llevar eventos.Si no sera payable. 
+        userRate = (userBalance*100)/totalSupply;
+        emit ReputationUserRate(target, userRate);
         return userRate;
 
     }
@@ -283,11 +283,11 @@ contract HMREP is owned {
       
      
      ///@dev Function to check de security token balance in the smart contratct 
-     ///@return true if has been done correctly REVISAR RETURN
+     ///@return balanceSec, balance of security token that the reputation smart contact have.
     
-    function HASHMBalance() onlyOwner public view returns (bool success) {
-         HASHMinterface(HASHMaddress).balanceAddress(address(this));
-         return true;
+    function HASHMBalance() onlyOwner public view returns (uint256 balance) {
+         uint256 balanceSec = HASHMinterface(HASHMaddress).balanceAddress(address(this));
+         return balanceSec;
     }  
      
      

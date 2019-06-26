@@ -50,7 +50,7 @@ contract owned {
 }
 
 
-interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes calldata _extraData) external; }
+interface tokenRecipient { function receiveApproval(address _from, uint256 _value, address _token, bytes _extraData) external; }
 
 contract HASHM is owned {
     
@@ -79,8 +79,9 @@ contract HASHM is owned {
 
 
      /// @notice Constrctor function: Initializes contract with initial supply tokens to the creator of the contract
+     ///constructor(uint256 initialSupply, string memory tokenName, string memory tokenSymbol) public
     constructor(uint256 initialSupply, string memory tokenName, string memory tokenSymbol) public {
-        totalSupply = initialSupply * 10 ** uint256(decimals);  // Update total supply with the decimal amount
+        totalSupply = initialSupply; //initialSupply * 1 ** uint256(decimals);  // Update total supply with the decimal amount
         balanceOf[msg.sender] = totalSupply;                    // Give the creator all initial tokens
         name = tokenName;                                       // Set the name for display purposes
         symbol = tokenSymbol;                                   // Set the symbol for display purposes
